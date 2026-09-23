@@ -17,14 +17,17 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<div class="offer-bar" data-offer><span class="dot"></span><span data-i18n="ob">عرض الإطلاق: خصم 30% لأول 10 عملاء، باقي <b class="left-n">10</b> مقاعد</span><a href="#offer" data-i18n="ob_cta">احجز مكانك</a></div>
 
 <nav class="nav">
   <div class="wrap">
     <a href="#top" class="brand" aria-label="Buildora"><span id="navLogo"></span><b>buildora</b></a>
     <div class="nav-links">
+      <a href="#work" data-i18n="n_work">شغلنا</a>
       <a href="#demos" data-i18n="n_demos">الديموهات</a>
       <a href="#how" data-i18n="n_how">كيف نعمل</a>
       <a href="#packages" data-i18n="n_pkg">الباقات</a>
+      <a href="#offer" data-i18n="n_offer">العرض</a>
       <a href="#faq" data-i18n="n_faq">الأسئلة</a>
     </div>
     <div class="nav-end">
@@ -34,43 +37,81 @@
   </div>
 </nav>
 
-<header class="hero" id="top">
+<header class="hero2" id="top">
+  <div class="wall" id="wall" aria-hidden="true"></div>
   <div class="wrap">
-    <div>
-      <span class="eyebrow">// buildora.agency</span>
-      <h1 data-i18n="h_title">موقعك يُبنى…<br><span class="neon">بلوك بلوك.</span></h1>
-      <p class="lead" data-i18n="h_lead">اكتب اسم نشاطك واختر مجالك، وشاهد موقعك جاهزًا باسمك خلال ثانية. أعجبك؟ نسلّمه لك باسمك وهويتك.</p>
-      <form class="builder" id="builder" novalidate>
-        <div>
-          <label for="bName" data-i18n="h_name">اسم نشاطك</label>
-          <input class="field" id="bName" maxlength="40" autocomplete="organization" data-i18n-ph="h_name_ph" placeholder="مثال: مطعم الريم">
-        </div>
-        <div>
-          <label for="bCat" data-i18n="h_cat">المجال</label>
-          <select class="field" id="bCat"></select>
-        </div>
-        <button class="btn btn-neon" type="submit" data-i18n="h_go">ابنِ موقعي</button>
-        <p class="err" id="bErr" role="alert"></p>
-      </form>
+    <span class="pill-offer" data-offer><span data-i18n="h_pill">🎁 عرض الإطلاق: خصم <b>30%</b> لأول 10 عملاء</span></span>
+    <h1 data-i18n="h_title">مواقع احترافية<br>تبني بيزنسك <span class="neon">بلوك بلوك.</span></h1>
+    <p class="lead" data-i18n="h_lead">نصمم مواقع ومتاجر للمطاعم والعقارات والبراندات في الخليج: سريعة، بعربي أصيل وإنجليزي، وجاهزة تجيب لك عملاء.</p>
+    <div class="ctas">
+      <a class="btn btn-neon" href="#try" data-i18n="h_cta1">جرّب موقعك باسمك ↓</a>
+      <a class="btn" href="#demos" data-i18n="h_cta2">شوف شغلنا</a>
     </div>
-    <div class="hero-art" id="heroArt"></div>
+    <div class="chips-trust">
+      <span data-i18n="t1">عربي + English</span>
+      <span data-i18n="t2">تسليم من 5 أيام</span>
+      <span data-i18n="t3">مصمم للجوال أولًا</span>
+      <span data-i18n="t4">واتساب في كل صفحة</span>
+    </div>
   </div>
 </header>
 
 <div class="strip">
   <div class="wrap">
     <div class="s"><b id="stDemos">+7</b><span data-i18n="st_1">ديمو جاهز للتجربة</span></div>
-    <div class="s"><b>+1</b><span data-i18n="st_2">ديمو جديد كل يوم</span></div>
+    <div class="s"><b>+3</b><span data-i18n="st_2">ديموهات جديدة كل أسبوع</span></div>
     <div class="s"><b data-i18n="st_3v">5</b><span data-i18n="st_3">أيام تسليم كحد أدنى</span></div>
     <div class="s"><b>AR·EN</b><span data-i18n="st_4">عربي وإنجليزي في كل موقع</span></div>
   </div>
 </div>
 
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-head rv"><div><span class="eyebrow">// 01 work</span><h2 data-i18n="s_title">شغل يتكلم عن نفسه</h2><p data-i18n="s_sub">مواقع حقيقية شغالة، مصممة لكل مجال على حدة. اختار واحد وشوفه على اللابتوب والجوال.</p></div></div>
+    <div class="show rv">
+      <div class="devices">
+        <div class="laptop"><div class="bar"><i></i><i></i><i></i></div><div class="screen" id="screen"></div></div>
+        <div class="laptop-base"></div>
+        <div class="phone" id="phone"></div>
+      </div>
+      <div class="show-list" id="showList"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="try">
+  <div class="wrap">
+    <div class="try rv">
+      <div>
+        <span class="eyebrow">// 02 try it</span>
+        <h2 data-i18n="y_title">شوف موقعك <span class="neon">باسمك</span> قبل ما تطلبه</h2>
+        <p class="sub" data-i18n="y_sub">اكتب اسم نشاطك واختار مجالك، وخلال ثانية تشوف موقع كامل باسمك. مجانًا ومن غير أي التزام.</p>
+        <form class="builder" id="builder" novalidate>
+          <div>
+            <label for="bName" data-i18n="h_name">اسم نشاطك</label>
+            <input class="field" id="bName" maxlength="40" autocomplete="organization" data-i18n-ph="h_name_ph" placeholder="مثال: مطعم الريم">
+          </div>
+          <div>
+            <label for="bCat" data-i18n="h_cat">المجال</label>
+            <select class="field" id="bCat"></select>
+          </div>
+          <button class="btn btn-neon" type="submit" data-i18n="h_go">ابنِ موقعي</button>
+          <p class="err" id="bErr" role="alert"></p>
+        </form>
+      </div>
+      <div class="mini" aria-hidden="true">
+        <div class="url"><span id="miniUrl">buildora.agency/demo?name=</span></div>
+        <div class="body" id="miniBody"><div class="nm"><span id="miniName">مطعم الريم</span><span class="caret"></span><small id="miniCat"></small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="sec" id="demos">
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">// 01 demos</span>
+        <span class="eyebrow">// 03 demos</span>
         <h2 data-i18n="d_title">جرّب قبل ما تطلب</h2>
         <p data-i18n="d_sub">كل ديمو موقع حقيقي يعمل. افتحه، اكتب اسم نشاطك، وشاهد كيف سيبدو موقعك.</p>
       </div>
@@ -84,7 +125,7 @@
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">// 02 process</span>
+        <span class="eyebrow">// 04 process</span>
         <h2 data-i18n="p_title">من الفكرة للإطلاق في 5 خطوات</h2>
       </div>
     </div>
@@ -98,17 +139,37 @@
   </div>
 </section>
 
+<section class="sec" id="offer" data-offer>
+  <div class="wrap">
+    <div class="offer-box rv">
+      <div>
+        <span class="eyebrow">// 05 launch offer</span>
+        <h2 data-i18n="o_title">خصم 30% لأول 10 عملاء</h2>
+        <p data-i18n="o_sub">بمناسبة إطلاق Buildora: أول 10 عملاء ياخدوا أي باقة بخصم 30%، ومعاها شهر عناية مجاني بعد التسليم.</p>
+        <a class="btn" data-wa="offer" href="#" target="_blank" rel="noopener" data-i18n="o_cta">احجز مكانك على واتساب</a>
+      </div>
+      <div class="spots">
+        <div class="big" id="spotsLeft">10</div>
+        <div data-i18n="o_left">مقاعد متبقية</div>
+        <div class="grid10" id="spotsGrid"></div>
+        <small style="color:#9a9a9a" data-i18n="o_note">العرض ينتهي أول ما المقاعد تخلص</small>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="sec" id="packages">
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">// 03 packages</span>
+        <span class="eyebrow">// 06 packages</span>
         <h2 data-i18n="k_title">باقة لكل مرحلة</h2>
         <p data-i18n="k_sub">كل مشروع مختلف، لذلك نرسل لك عرض سعر مخصصًا لاحتياجك خلال 24 ساعة.</p>
       </div>
     </div>
     <div class="pkgs rv">
       <div class="pkg">
+        <span class="deal" data-offer data-i18n="k_deal">خصم 30% لعملاء الإطلاق</span>
         <h3 data-i18n="k1">صفحة هبوط</h3>
         <p class="for" data-i18n="k1f">لإطلاق منتج أو حملة إعلانية</p>
         <div class="time" data-i18n="k1t">~ 5 أيام</div>
@@ -117,6 +178,7 @@
       </div>
       <div class="pkg hot">
         <span class="pop" data-i18n="k_pop">الأكثر طلبًا</span>
+        <span class="deal" data-offer data-i18n="k_deal">خصم 30% لعملاء الإطلاق</span>
         <h3 data-i18n="k2">موقع النشاط</h3>
         <p class="for" data-i18n="k2f">للمطاعم والعيادات والشركات والعقارات</p>
         <div class="time" data-i18n="k2t">~ 7 إلى 10 أيام</div>
@@ -124,6 +186,7 @@
         <a class="btn btn-neon" data-wa="pkg" data-pkg="k2" href="#" target="_blank" rel="noopener" data-i18n="k_cta">اطلب عرض سعر</a>
       </div>
       <div class="pkg">
+        <span class="deal" data-offer data-i18n="k_deal">خصم 30% لعملاء الإطلاق</span>
         <h3 data-i18n="k3">متجر إلكتروني</h3>
         <p class="for" data-i18n="k3f">للبراندات والعطور والأزياء</p>
         <div class="time" data-i18n="k3t">~ 14 إلى 21 يومًا</div>
@@ -145,7 +208,7 @@
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">// 04 why</span>
+        <span class="eyebrow">// 07 why</span>
         <h2 data-i18n="w_title">ليش Buildora؟</h2>
       </div>
     </div>
@@ -164,7 +227,7 @@
   <div class="wrap">
     <div class="sec-head rv">
       <div>
-        <span class="eyebrow">// 05 faq</span>
+        <span class="eyebrow">// 08 faq</span>
         <h2 data-i18n="f_title">أسئلة شائعة</h2>
       </div>
     </div>
@@ -205,5 +268,6 @@
 
 <script src="assets/common.js"></script>
 <script src="assets/home.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

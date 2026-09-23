@@ -2,11 +2,20 @@
 (function () {
   const EN = {
     title: 'Buildora | Websites, built block by block',
+    ob: 'Launch offer: 30% off for our first 10 clients, <b class="left-n">10</b> spots left', ob_cta: 'Claim your spot',
+    h_pill: '🎁 Launch offer: <b>30%</b> off for the first 10 clients',
+    h_cta1: 'Try your site with your name ↓', h_cta2: 'See our work',
+    t1: 'Arabic + English', t2: 'Delivery from 5 days', t3: 'Mobile first', t4: 'WhatsApp on every page',
+    n_work: 'Work', n_offer: 'Offer',
+    s_title: 'Work that speaks for itself', s_sub: 'Real, working websites designed for each industry. Pick one and see it on laptop and phone.',
+    y_title: 'See your site <span class="neon">with your name</span> before you order', y_sub: 'Type your business name and pick your industry: in a second you see a full website with your name. Free, no commitment.',
+    o_title: '30% off for our first 10 clients', o_sub: 'To celebrate the Buildora launch, our first 10 clients get any package at 30% off, plus one free month of care after delivery.',
+    o_cta: 'Claim your spot on WhatsApp', o_left: 'spots left', o_note: 'The offer ends when the spots run out', k_deal: '30% off for launch clients',
     n_demos: 'Demos', n_how: 'How we work', n_pkg: 'Packages', n_faq: 'FAQ', n_cta: 'Get a quote',
-    h_title: 'Your website,<br><span class="neon">block by block.</span>',
-    h_lead: 'Type your business name, pick your industry, and see your website ready with your name in a second. Like it? We deliver it with your name and brand.',
+    h_title: 'Professional websites<br>that build your business <span class="neon">block by block.</span>',
+    h_lead: 'We design websites and stores for restaurants, real estate and brands across the GCC: fast, in native Arabic and English, and built to bring you clients.',
     h_name: 'Business name', h_name_ph: 'e.g. Al Reem Restaurant', h_cat: 'Industry', h_go: 'Build my site',
-    st_1: 'live demos to try', st_2: 'new demo every day', st_3v: '5', st_3: 'days minimum delivery', st_4: 'Arabic and English on every site',
+    st_1: 'live demos to try', st_2: 'new demos every week', st_3v: '5', st_3: 'days minimum delivery', st_4: 'Arabic and English on every site',
     d_title: 'Try before you order', d_sub: 'Every demo is a real, working website. Open it, type your business name, and see how your site will look.',
     p_title: 'From idea to launch in 5 steps',
     p1h: 'Pick a demo', p1p: 'Try the demos with your business name and choose the closest one.',
@@ -52,8 +61,7 @@
   let filter = 'all';
 
   document.getElementById('navLogo').innerHTML = BZ.logoSVG(22);
-  document.getElementById('heroArt').innerHTML = BZ.logoSVG(0, true);
-  document.getElementById('ctaLogo').innerHTML = BZ.logoSVG(40);
+    document.getElementById('ctaLogo').innerHTML = BZ.logoSVG(40);
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   function waText(kind, el) {
@@ -62,6 +70,9 @@
       return lang === 'ar'
         ? 'أهلًا Buildora 👋\nأبغى عرض سعر لباقة: ' + p + '\nاسم النشاط: '
         : 'Hi Buildora 👋\nI would like a quote for: ' + p + '\nBusiness name: ';
+    }
+    if (kind === 'offer') {
+      return lang === 'ar' ? 'أهلًا Buildora 👋\nأبغى أحجز مكاني في عرض الإطلاق (خصم ' + BZ.offer.percent + '%)\nاسم النشاط: ' : 'Hi Buildora 👋\nI want to claim a launch offer spot (' + BZ.offer.percent + '% off)\nBusiness name: ';
     }
     if (kind === 'care') {
       return lang === 'ar' ? 'أهلًا Buildora 👋\nأبغى أعرف تفاصيل باقة العناية الشهرية' : 'Hi Buildora 👋\nI would like details about the monthly care plan';
@@ -86,6 +97,7 @@
     sel.innerHTML = Object.keys(counts).map(c =>
       '<option value="' + c + '">' + BZ.esc((BZ.categories[c] || { ar: c, en: c })[lang]) + '</option>').join('');
     if (prev && counts[prev]) sel.value = prev;
+    else if (counts.restaurants) sel.value = 'restaurants';
   }
 
   function renderChips() {
@@ -123,7 +135,8 @@
 
   function applyLang() {
     BZ.setLang(lang, DICT);
-    if (demos.length) { renderSelect(); renderChips(); renderGrid(); }
+    if (demos.length) { renderSelect(); renderChips(); renderGrid(); renderShowList(); miniUpdate(); }
+    if (typeof renderOffer === 'function') renderOffer();
     refreshWa();
   }
 
@@ -144,6 +157,84 @@
     const pick = demos.filter(d => d.category === cat).sort((a, b) => (b.added || '').localeCompare(a.added || ''))[0] || demos[0];
     location.href = 'demo.html?d=' + pick.slug + '&name=' + encodeURIComponent(name);
   });
+
+
+  // ---------- Hero wall, showcase, live mini preview, offer ----------
+  const SHOTS = ['restaurant-hero','apex-cars--fleet','dubai-realestate-hero','perfume--products','asyl-clothing-hero','restaurant--menu','apex-cars-hero','dubai-realestate--why','perfume-hero','asyl-clothing--shop'];
+  (function wall() {
+    const el = document.getElementById('wall');
+    const cols = window.innerWidth < 700 ? 3 : 5;
+    let html = '';
+    for (let c = 0; c < cols; c++) {
+      const pick = SHOTS.filter((_, i) => i % cols === c).concat(SHOTS.filter((_, i) => i % cols !== c).slice(c, c + 2));
+      const imgs = pick.map(n => '<img src="assets/shots/' + n + '.jpg" alt="" loading="' + (c < 2 ? 'eager' : 'lazy') + '">').join('');
+      html += '<div class="col">' + imgs + imgs + '</div>';
+    }
+    el.innerHTML = html;
+  })();
+
+  const SHOW = [
+    { slug: 'restaurant', desk: ['restaurant-hero', 'restaurant--menu'], m: 'm--restaurant' },
+    { slug: 'apex-cars', desk: ['apex-cars-hero', 'apex-cars--fleet'], m: 'm--apex-cars' },
+    { slug: 'dubai-realestate', desk: ['dubai-realestate-hero', 'dubai-realestate--why'], m: 'm--dubai-realestate' },
+    { slug: 'perfume', desk: ['perfume-hero', 'perfume--products'], m: 'm--perfume' },
+    { slug: 'asyl-clothing', desk: ['asyl-clothing-hero', 'asyl-clothing--shop'], m: 'm--asyl-clothing' }
+  ];
+  let showIdx = 0, frame = 0, showTimer = null;
+  function paintShow() {
+    const it = SHOW[showIdx];
+    const scr = document.getElementById('screen'), ph = document.getElementById('phone');
+    scr.innerHTML = it.desk.map((n, i) => '<img src="assets/shots/' + n + '.jpg" alt=""' + (i === 0 ? ' class="on"' : '') + '>').join('');
+    ph.innerHTML = '<img class="on" src="assets/shots/' + it.m + '.jpg" alt="">';
+    frame = 0;
+    document.querySelectorAll('#showList button').forEach((b, i) => b.setAttribute('aria-pressed', i === showIdx));
+  }
+  function renderShowList() {
+    const box = document.getElementById('showList');
+    box.innerHTML = SHOW.map((it, i) => {
+      const d = demos.find(x => x.slug === it.slug);
+      if (!d) return '';
+      const cat = (BZ.categories[d.category] || { ar: '', en: '' })[lang];
+      return '<button type="button" data-i="' + i + '" aria-pressed="' + (i === showIdx) + '"><span><b>' + BZ.esc(d.name[lang]) + '</b><small>' + BZ.esc(cat) + ' · ' + BZ.esc(d.city[lang]) + '</small></span><a class="go" href="demo.html?d=' + d.slug + '">' + (lang === 'ar' ? 'جرّبه ←' : 'Try it →') + '</a></button>';
+    }).join('');
+    box.querySelectorAll('button').forEach(b => b.addEventListener('click', e => {
+      if (e.target.closest('a')) return;
+      showIdx = +b.dataset.i; paintShow(); restartShow();
+    }));
+  }
+  function restartShow() {
+    clearInterval(showTimer);
+    showTimer = setInterval(() => {
+      const imgs = document.querySelectorAll('#screen img');
+      if (!imgs.length) return;
+      imgs[frame].classList.remove('on');
+      frame = (frame + 1) % imgs.length;
+      imgs[frame].classList.add('on');
+      if (frame === 0) { showIdx = (showIdx + 1) % SHOW.length; paintShow(); }
+    }, 2600);
+  }
+  paintShow(); restartShow();
+
+  function miniUpdate() {
+    const name = nameEl.value.trim() || (lang === 'ar' ? 'مطعم الريم' : 'Al Reem Restaurant');
+    const cat = document.getElementById('bCat').value;
+    const pick = demos.filter(d => d.category === cat)[0];
+    document.getElementById('miniName').textContent = name;
+    document.getElementById('miniUrl').textContent = 'buildora.agency/demo?name=' + name;
+    document.getElementById('miniCat').textContent = pick ? (BZ.categories[cat] || {})[lang] || '' : '';
+    const shot = pick ? SHOW.find(s => s.slug === pick.slug) : null;
+    document.getElementById('miniBody').style.backgroundImage = 'url(assets/shots/' + (shot ? shot.desk[0] : 'restaurant-hero') + '.jpg)';
+  }
+  nameEl.addEventListener('input', miniUpdate);
+  document.getElementById('bCat').addEventListener('change', miniUpdate);
+
+  function renderOffer() {
+    const o = BZ.offer;
+    document.querySelectorAll('[data-offer]').forEach(el => { el.hidden = !o.active || o.left <= 0; });
+    document.querySelectorAll('.left-n').forEach(el => { el.textContent = o.left; });
+    document.getElementById('spotsLeft').textContent = o.left;
+    document.getElementById('spotsGrid').innerHTML = Array.from({ length: o.total }, (_, i) => '<i class="' + (i < o.total - o.left ? 'taken' : '') + '"></i>').join('');
+  }
 
   fetch('data/demos.json').then(r => r.json()).then(list => {
     demos = list.sort((a, b) => (b.added || '').localeCompare(a.added || ''));

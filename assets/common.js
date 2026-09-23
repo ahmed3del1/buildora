@@ -1,6 +1,8 @@
 // Shared bits: WhatsApp number, language handling, categories.
 const BZ = {
   whatsapp: '201034168277',
+  // Launch offer: change "left" as clients sign up; set active:false to hide it everywhere.
+  offer: { active: true, percent: 30, total: 10, left: 10 },
   categories: {
     restaurants: { ar: 'مطاعم وكافيهات', en: 'Restaurants and cafés' },
     'real-estate': { ar: 'عقارات', en: 'Real estate' },
