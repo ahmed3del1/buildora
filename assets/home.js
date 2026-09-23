@@ -1,7 +1,7 @@
 // Home page: i18n, gallery, hero builder, WhatsApp links.
 (function () {
   const EN = {
-    title: 'Buildora | Websites, built block by block',
+    title: 'Buildora | Professional web design',
     ob: 'Launch offer: 30% off for our first 10 clients, <b class="left-n">10</b> spots left', ob_cta: 'Claim your spot',
     h_pill: '🎁 Launch offer: <b>30%</b> off for the first 10 clients',
     h_cta1: 'Try your site with your name ↓', h_cta2: 'See our work',
@@ -12,7 +12,7 @@
     o_title: '30% off for our first 10 clients', o_sub: 'To celebrate the Buildora launch, our first 10 clients get any package at 30% off, plus one free month of care after delivery.',
     o_cta: 'Claim your spot on WhatsApp', o_left: 'spots left', o_note: 'The offer ends when the spots run out', k_deal: '30% off for launch clients',
     n_demos: 'Demos', n_how: 'How we work', n_pkg: 'Packages', n_faq: 'FAQ', n_cta: 'Get a quote',
-    h_title: 'Professional websites<br>that build your business <span class="neon">block by block.</span>',
+    h_title: 'Professional websites<br>that turn visitors into <span class="neon">clients.</span>',
     h_lead: 'We design websites and stores for restaurants, real estate and brands across the GCC: fast, in native Arabic and English, and built to bring you clients.',
     h_name: 'Business name', h_name_ph: 'e.g. Al Reem Restaurant', h_cat: 'Industry', h_go: 'Build my site',
     st_1: 'live demos to try', st_2: 'new demos every week', st_3v: '5', st_3: 'days minimum delivery', st_4: 'Arabic and English on every site',
