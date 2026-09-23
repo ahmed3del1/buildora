@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buildora | Demo</title>
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  html, body { height: 100%; overflow: hidden; }
+  body { display: flex; flex-direction: column; }
+  .bar {
+    flex: none; height: 64px; display: flex; align-items: center; gap: 10px; padding: 0 14px;
+    border-bottom: 1px solid var(--line); background: var(--bg); position: relative; z-index: 5;
+  }
+  .bar .brand b { font-size: 19px; }
+  .bar .sep { width: 1px; height: 28px; background: var(--line); }
+  .bar .dname { font-size: 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+  .bar .dname b { color: var(--text); display: block; font-size: 15px; line-height: 1.2; }
+  .namebox { flex: 1; display: flex; justify-content: center; }
+  .namebox .in { position: relative; width: 100%; max-width: 380px; }
+  .namebox input {
+    width: 100%; height: 42px; border-radius: 12px; border: 1px solid var(--neon); background: #0f1a13;
+    padding: 0 14px; outline: none; font-weight: 600;
+  }
+  .namebox input::placeholder { color: #7fbf98; font-weight: 400; }
+  .tools { display: flex; gap: 8px; align-items: center; }
+  .seg { display: flex; border: 1px solid var(--line-2); border-radius: 10px; overflow: hidden; }
+  .seg button { height: 38px; width: 42px; background: transparent; border: 0; cursor: pointer; color: var(--muted); display: grid; place-items: center; }
+  .seg button[aria-pressed="true"] { background: var(--neon); color: #04140B; }
+  .icon-btn { width: 40px; padding: 0; }
+  .stage { flex: 1; position: relative; background: #050505; display: flex; justify-content: center; align-items: stretch; overflow: hidden; }
+  .stage iframe { border: 0; width: 100%; height: 100%; background: #fff; transition: width .35s, height .35s, border-radius .35s; }
+  .stage.mobile { align-items: center; padding: 18px 0; background: radial-gradient(circle at center, #10271A 0%, #050505 65%); }
+  .stage.mobile iframe { width: 390px; height: min(844px, 100%); border-radius: 34px; border: 10px solid #1d1d1d; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  .loader { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 18px; align-items: center; justify-content: center; background: var(--bg); z-index: 3; transition: opacity .4s; }
+  .loader svg { width: 110px; }
+  .loader.hide { opacity: 0; pointer-events: none; }
+  .loader .bar2 { width: 160px; height: 3px; background: #222; border-radius: 2px; overflow: hidden; }
+  .loader .bar2 i { display: block; height: 3px; background: var(--neon); animation: bzfill 2.6s ease-in-out infinite; }
+  @keyframes bzfill { 0% { width: 0; } 80%, 100% { width: 100%; } }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px); opacity: 0; z-index: 20;
+    background: var(--neon); color: #04140B; font-weight: 700; padding: 10px 18px; border-radius: 10px; transition: .3s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .hint[hidden] { display: none; }
+  .hint {
+    position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 4; background: var(--card);
+    border: 1px solid var(--neon); border-radius: 12px; padding: 10px 16px; font-size: 14px; display: flex; gap: 10px; align-items: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,.5); max-width: calc(100% - 32px);
+  }
+  .hint button { background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; }
+  .notfound { color: var(--muted); display: flex; flex-direction: column; gap: 14px; align-items: center; justify-content: center; }
+  @media (max-width: 1000px) { .bar .dname, .bar .sep { display: none; } }
+  @media (max-width: 760px) {
+    .bar { height: auto; flex-wrap: wrap; padding: 10px 12px; gap: 8px; }
+    .bar .brand b, .seg, .bar .lang-btn { display: none; }
+    .namebox { order: 3; flex-basis: 100%; }
+    .namebox .in { max-width: none; }
+    .tools { margin-inline-start: auto; }
+    .stage.mobile { padding: 0; background: #050505; }
+    .stage.mobile iframe { width: 100%; height: 100%; border-radius: 0; border: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <a class="brand" href="index.html#demos" aria-label="Buildora"><span id="navLogo"></span><b>buildora</b></a>
+  <span class="sep"></span>
+  <div class="dname"><span id="dCat"></span><b id="dName"></b></div>
+  <div class="namebox">
+    <div class="in">
+      <label for="bizName" class="sr-only" data-i18n="name_lbl">اسم نشاطك</label>
+      <input id="bizName" maxlength="40" autocomplete="organization" data-i18n-ph="name_ph" placeholder="✍️ اكتب اسم نشاطك هنا">
+    </div>
+  </div>
+  <div class="tools">
+    <div class="seg" role="group" aria-label="Device">
+      <button type="button" data-dev="desktop" aria-pressed="true" aria-label="Desktop"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+      <button type="button" data-dev="mobile" aria-pressed="false" aria-label="Mobile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></button>
+    </div>
+    <button class="btn btn-sm icon-btn" type="button" id="shareBtn" aria-label="Share"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
+    <button class="btn btn-sm lang-btn" type="button">EN</button>
+    <a class="btn btn-sm btn-neon" id="orderBtn" href="#" target="_blank" rel="noopener" data-i18n="order">اطلب هذا الموقع</a>
+  </div>
+</div>
+
+<div class="stage" id="stage">
+  <div class="loader" id="loader"><span id="loaderLogo"></span><div class="bar2"><i></i></div></div>
+  <div class="hint" id="hint" hidden><span data-i18n="hint">اكتب اسم نشاطك فوق، وشوف الموقع يتغير باسمك 👆</span><button type="button" id="hintX" aria-label="Close">×</button></div>
+  <iframe id="frame" title="Demo"></iframe>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/common.js"></script>
+<script src="assets/demo.js"></script>
+</body>
+</html>

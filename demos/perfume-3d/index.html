@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سديم — إصدار محدود | عطر ثلاثي الأبعاد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--amber:#E3A75E;--cream:#F6EAD6;--copper:#C27A3E}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0b0605;color:var(--cream);font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(120% 90% at 30% 40%,#1d0f09,#0b0605)}
+main{height:640vh}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:1}
+a{color:inherit;text-decoration:none}
+
+/* header */
+header{position:fixed;top:0;inset-inline:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:26px 5vw}
+.logo{font-family:'Aref Ruqaa',serif;font-size:34px;font-weight:700;line-height:1;color:var(--cream)}
+.logo small{display:block;font-family:'IBM Plex Sans Arabic';font-size:10.5px;font-weight:400;color:var(--amber);letter-spacing:.6px;margin-top:5px}
+.pill{border:1px solid rgba(246,234,214,.4);padding:11px 26px;border-radius:40px;font-size:14.5px;font-weight:500;backdrop-filter:blur(8px);background:rgba(246,234,214,.06);transition:.3s}
+.pill:hover{background:var(--cream);color:#1a0d07}
+
+/* chapters */
+.panel{position:fixed;z-index:10;top:50%;right:7vw;width:min(470px,42vw);transform:translateY(-50%);opacity:0;pointer-events:none;will-change:transform,opacity}
+.panel.on{pointer-events:auto}
+.kicker{display:inline-flex;align-items:center;gap:12px;color:var(--amber);font-size:14.5px;letter-spacing:.5px;margin-bottom:20px}
+.kicker::before{content:"";width:40px;height:1px;background:var(--amber)}
+.panel h1{font-family:'Aref Ruqaa',serif;font-weight:700;font-size:clamp(96px,13vw,190px);line-height:.95;margin-bottom:14px;color:var(--cream);text-shadow:0 10px 60px rgba(227,167,94,.35)}
+.panel h2{font-family:'Amiri',serif;font-weight:700;font-size:clamp(42px,5.2vw,74px);line-height:1.15;margin-bottom:18px}
+.panel h2 em{font-style:normal;color:var(--amber)}
+.panel p{font-size:clamp(16px,1.35vw,19px);line-height:1.9;font-weight:300;color:rgba(246,234,214,.82);max-width:440px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chips span{border:1px solid rgba(246,234,214,.28);padding:7px 18px;border-radius:30px;font-size:14px;background:rgba(246,234,214,.05);backdrop-filter:blur(6px)}
+.price{display:flex;align-items:baseline;gap:10px;margin:26px 0 28px}
+.price b{font-family:'Amiri',serif;font-size:60px;line-height:1;color:var(--amber)}
+.price span{font-size:17px;color:rgba(246,234,214,.7)}
+.price s{font-size:16px;opacity:.5;margin-inline-start:8px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 34px;border-radius:40px;font-weight:600;font-size:16px;transition:.3s}
+.btn.fill{background:var(--copper);color:#fff;box-shadow:0 18px 40px -14px rgba(194,122,62,.8)}
+.btn.fill:hover{background:var(--amber);color:#1a0d07;transform:translateY(-3px)}
+.btn.line{border:1px solid rgba(246,234,214,.45)}
+.btn.line:hover{background:var(--cream);color:#1a0d07}
+.note{margin-top:20px;font-size:13.5px;color:rgba(246,234,214,.6)}
+.note i{color:var(--amber);font-style:normal}
+
+/* scroll hint + progress */
+.hint{position:fixed;z-index:12;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:12.5px;color:rgba(246,234,214,.65);letter-spacing:.5px;transition:opacity .5s}
+.mouse{width:24px;height:38px;border:1.5px solid rgba(246,234,214,.55);border-radius:14px;position:relative}
+.mouse::after{content:"";position:absolute;top:7px;left:50%;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:var(--amber);animation:wheel 1.8s infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+.dots{position:fixed;z-index:12;left:3vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:16px}
+.dots i{display:block;width:6px;height:6px;border-radius:50%;background:rgba(246,234,214,.3);transition:.4s}
+.dots i.on{background:var(--amber);height:26px;border-radius:4px}
+.stamp{position:fixed;z-index:12;bottom:28px;right:5vw;font-size:12.5px;color:rgba(246,234,214,.5)}
+
+/* loader / fallback */
+#load{position:fixed;inset:0;z-index:50;background:#0b0605;display:grid;place-items:center;transition:opacity .8s;font-family:'Aref Ruqaa',serif;font-size:44px;color:var(--amber)}
+#load.hide{opacity:0;pointer-events:none}
+#fallback{display:none;position:fixed;inset:0;z-index:40;place-items:center;text-align:center;padding:30px;font-size:18px}
+
+@media(max-width:820px){
+  header{padding:18px 20px}
+  .logo{font-size:28px}
+  .pill{padding:9px 18px;font-size:13.5px}
+  .panel{top:auto;bottom:0;right:0;left:0;width:100%;transform:none;padding:80px 24px 64px;background:linear-gradient(0deg,rgba(11,6,5,.92) 0%,rgba(11,6,5,.72) 55%,rgba(11,6,5,0) 100%)}
+  .panel h1{font-size:92px;line-height:1.1;margin-bottom:30px}
+  .panel h2{font-size:42px;margin-bottom:10px}
+  .panel p{font-size:15.5px;line-height:1.75}
+  .kicker{margin-bottom:12px;font-size:13px}
+  .chips{margin-top:16px;gap:8px}
+  .chips span{font-size:12.5px;padding:5px 14px}
+  .price{margin:14px 0 18px}
+  .price b{font-size:46px}
+  .btn{padding:14px 26px;font-size:15px}
+  .dots{left:auto;right:12px;top:26%}
+  .stamp,.hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="load">سديم</div>
+<div id="fallback"><div>متصفحك لا يدعم عرض المجسمات ثلاثية الأبعاد.<br>جرّب متصفحًا حديثًا مثل Chrome أو Safari.</div></div>
+
+<header>
+  <a class="logo" href="#">سديم<small>دار للعود والبخور</small></a>
+  <a class="pill" href="#">احجز نسختك</a>
+</header>
+
+<canvas id="c"></canvas>
+
+<div class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i></div>
+
+<section class="panel" data-i="0">
+  <div class="kicker">إصدار محدود · 300 زجاجة</div>
+  <h1>سديم</h1>
+  <p>عطر يبدأ من الرياض… وما ينتهي أثره.</p>
+</section>
+
+<section class="panel" data-i="1">
+  <div class="kicker">الافتتاحية</div>
+  <h2>زعفران <em>وهيل</em></h2>
+  <p>أول ما ترشّه، يفتح لك المجلس: دفء الزعفران، ونفحة الهيل الأخضر تصحّي الحواس.</p>
+  <div class="chips"><span>زعفران إيراني</span><span>هيل</span><span>برغموت</span></div>
+</section>
+
+<section class="panel" data-i="2">
+  <div class="kicker">القلب</div>
+  <h2>عود كمبودي <em>معتّق</em></h2>
+  <p>12 سنة من التعتيق تعطيه العمق اللي ما يتقلّد، وكل نفَس فيه حكاية.</p>
+  <div class="chips"><span>عود كمبودي</span><span>ورد طائفي</span><span>لبان</span></div>
+</section>
+
+<section class="panel" data-i="3">
+  <div class="kicker">القاعدة</div>
+  <h2>عنبر <em>ومسك</em></h2>
+  <p>يثبت لين آخر الليل، ويرجع لك الصبح على ياقة الثوب.</p>
+  <div class="chips"><span>عنبر أشهب</span><span>مسك أبيض</span><span>صندل</span></div>
+</section>
+
+<section class="panel" data-i="4">
+  <div class="kicker">احجز نسختك</div>
+  <h2>300 زجاجة <em>فقط</em></h2>
+  <p>سديم — عطر 100 مل بعلبة هدية فاخرة، مرقّمة بالتسلسل.</p>
+  <div class="price"><b>890</b><span>ر.س</span><s>1,090 ر.س</s></div>
+  <div class="btns"><a href="#" class="btn fill">احجز الحين</a><a href="#" class="btn line">اطلب عبر واتساب</a></div>
+  <div class="note"><i>✦</i> الحجز المسبق مفتوح لين 30 سبتمبر · توصيل مجاني</div>
+</section>
+
+<div class="hint" id="hint"><div class="mouse"></div><span>مرّر لأسفل</span></div>
+<div class="stamp">تصميم ديمو تجريبي · العلامة والمنتج افتراضيان</div>
+
+<main></main>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+const canvas=document.getElementById('c');
+let renderer;
+try{
+  renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+}catch(e){
+  document.getElementById('fallback').style.display='grid';
+  document.getElementById('load').classList.add('hide');
+  throw e;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+renderer.setClearColor(0x000000,0);
+
+const scene=new THREE.Scene();
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+
+const camera=new THREE.PerspectiveCamera(35,1,0.1,100);
+
+/* ---------- textures ---------- */
+try{await Promise.race([Promise.all([document.fonts.load('700 100px "Aref Ruqaa"'),document.fonts.load('400 40px "IBM Plex Sans Arabic"')]),new Promise(r=>setTimeout(r,2500))]);}catch(e){}
+
+function labelTexture(){
+  const W=512,H=560,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#F7ECD8');g.addColorStop(1,'#E9D6B4');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.strokeStyle='#B5813A';x.lineWidth=5;x.strokeRect(16,16,W-32,H-32);x.lineWidth=1.5;x.strokeRect(30,30,W-60,H-60);
+  x.textAlign='center';x.fillStyle='#2A140A';x.direction='rtl';
+  x.font='700 210px "Aref Ruqaa",serif';x.fillText('سديم',W/2,255);
+  x.font='400 34px "IBM Plex Sans Arabic",sans-serif';x.fillStyle='#8A5A2B';x.fillText('دار للعود والبخور',W/2,318);
+  x.strokeStyle='#B5813A';x.lineWidth=1.5;x.beginPath();x.moveTo(W/2-110,352);x.lineTo(W/2-14,352);x.moveTo(W/2+14,352);x.lineTo(W/2+110,352);x.stroke();
+  x.fillStyle='#B5813A';x.beginPath();x.moveTo(W/2,340);x.lineTo(W/2+9,352);x.lineTo(W/2,364);x.lineTo(W/2-9,352);x.fill();
+  x.direction='ltr';x.fillStyle='#2A140A';x.font='500 30px "IBM Plex Sans Arabic",sans-serif';x.letterSpacing='8px';x.fillText('EAU DE PARFUM',W/2+4,420);
+  x.font='400 26px "IBM Plex Sans Arabic",sans-serif';x.fillStyle='#8A5A2B';x.letterSpacing='6px';x.fillText('100 ML',W/2+3,466);
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t;
+}
+function liquidTexture(){
+  const c=document.createElement('canvas');c.width=8;c.height=256;const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,256);g.addColorStop(0,'#F0B45A');g.addColorStop(.45,'#C9661D');g.addColorStop(1,'#6E2A08');x.fillStyle=g;x.fillRect(0,0,8,256);
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
+}
+function softDot(){
+  const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');
+  const g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.25,'rgba(255,255,255,.55)');g.addColorStop(1,'rgba(255,255,255,0)');
+  x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);
+}
+
+/* ---------- bottle ---------- */
+const stage=new THREE.Group();scene.add(stage);
+const bottle=new THREE.Group();stage.add(bottle);
+
+const glass=new THREE.Mesh(
+  new RoundedBoxGeometry(1.7,2.3,0.95,10,0.13),
+  new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:0.03,transmission:1,thickness:1.4,ior:1.5,envMapIntensity:.85,specularIntensity:.7,clearcoat:.6,clearcoatRoughness:0,attenuationColor:new THREE.Color(0xffd9a3),attenuationDistance:5})
+);
+bottle.add(glass);
+
+const liquid=new THREE.Mesh(
+  new RoundedBoxGeometry(1.5,2.02,0.75,8,0.09),
+  new THREE.MeshPhysicalMaterial({map:liquidTexture(),roughness:0.1,metalness:0,emissive:0x5a2306,emissiveIntensity:.9,clearcoat:.8,envMapIntensity:.8})
+);
+liquid.position.y=-0.1;bottle.add(liquid);
+
+const gold=new THREE.MeshStandardMaterial({color:0xD9A24A,metalness:1,roughness:0.22,envMapIntensity:1.6});
+const collar=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.36,0.24,64),gold);collar.position.y=1.27;bottle.add(collar);
+const neckRing=new THREE.Mesh(new THREE.TorusGeometry(0.36,0.025,16,64),gold);neckRing.rotation.x=Math.PI/2;neckRing.position.y=1.15;bottle.add(neckRing);
+const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.44,0.9,64),new THREE.MeshPhysicalMaterial({color:0x2B150B,roughness:0.28,metalness:0.25,clearcoat:1,clearcoatRoughness:0.08,envMapIntensity:1.2}));
+cap.position.y=1.84;bottle.add(cap);
+const capBand=new THREE.Mesh(new THREE.CylinderGeometry(0.445,0.445,0.07,64),gold);capBand.position.y=1.5;bottle.add(capBand);
+const capTop=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.42,0.04,64),gold);capTop.position.y=2.31;bottle.add(capTop);
+
+const labelMat=new THREE.MeshStandardMaterial({map:labelTexture(),roughness:0.55,metalness:0.15,envMapIntensity:.6});
+const label=new THREE.Mesh(new THREE.PlaneGeometry(1.06,1.16),labelMat);label.position.set(0,-0.05,0.482);bottle.add(label);
+const label2=label.clone();label2.rotation.y=Math.PI;label2.position.z=-0.482;bottle.add(label2);
+
+const ped=new THREE.Mesh(new THREE.CylinderGeometry(1.55,1.7,0.14,96),new THREE.MeshPhysicalMaterial({color:0x140A05,roughness:0.16,metalness:0.7,clearcoat:1,envMapIntensity:1.3}));
+ped.position.y=-1.22;stage.add(ped);
+const pedRing=new THREE.Mesh(new THREE.TorusGeometry(1.56,0.016,12,120),gold);pedRing.rotation.x=Math.PI/2;pedRing.position.y=-1.15;stage.add(pedRing);
+
+/* ---------- lights ---------- */
+scene.add(new THREE.AmbientLight(0xffe6c8,0.25));
+const key=new THREE.DirectionalLight(0xffe2b8,2.4);key.position.set(3,4,5);scene.add(key);
+const rim=new THREE.PointLight(0xff9a4d,60,20);rim.position.set(-4,2,-3);scene.add(rim);
+const fill=new THREE.PointLight(0xffc98a,25,20);fill.position.set(3,-1,4);scene.add(fill);
+
+/* ---------- glow + dust ---------- */
+const dot=softDot();
+const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:dot,color:0xff9a3c,transparent:true,opacity:.85,blending:THREE.AdditiveBlending,depthWrite:false}));
+glow.scale.set(11,11,1);glow.position.set(0,0.4,-2.5);stage.add(glow);
+
+const N=260,pos=new Float32Array(N*3),spd=new Float32Array(N);
+for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*14;pos[i*3+1]=(Math.random()-.5)*9;pos[i*3+2]=(Math.random()-.5)*8-1;spd[i]=.15+Math.random()*.4}
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+const dust=new THREE.Points(pg,new THREE.PointsMaterial({map:dot,size:.11,color:0xffd28a,transparent:true,opacity:.75,blending:THREE.AdditiveBlending,depthWrite:false}));
+scene.add(dust);
+
+/* ---------- chapters ---------- */
+const K=[
+  {rot:.45, z:9.6, y:0,    tilt:.02, glow:'#ff9a3c', b1:'#22120a', b2:'#0b0605'},
+  {rot:2.35,z:8.8, y:0,    tilt:.06, glow:'#ffb62e', b1:'#41250a', b2:'#130a04'},
+  {rot:4.1, z:7.6, y:-.1,  tilt:.0,  glow:'#d0621d', b1:'#33170c', b2:'#0e0604'},
+  {rot:5.7, z:8.6, y:0,    tilt:-.05,glow:'#b58cff', b1:'#2a1a3a', b2:'#0a0710'},
+  {rot:6.75,z:9.4, y:0,    tilt:.02, glow:'#ffb35a', b1:'#22120a', b2:'#0b0605'}
+];
+const panels=[...document.querySelectorAll('.panel')],dots=[...document.querySelectorAll('#dots i')],hint=document.getElementById('hint');
+const tc1=new THREE.Color(),tc2=new THREE.Color();
+const ease=t=>t*t*(3-2*t);
+const cur={rot:K[0].rot,z:K[0].z,y:0,tilt:0,c:0};
+let mx=0,my=0,tmx=0,tmy=0,portrait=false;
+
+function resize(){
+  const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();portrait=w/h<.95;
+}
+addEventListener('resize',resize);resize();
+addEventListener('pointermove',e=>{tmx=(e.clientX/innerWidth-.5);tmy=(e.clientY/innerHeight-.5)},{passive:true});
+
+function progress(){const m=document.documentElement.scrollHeight-innerHeight;return m>0?Math.min(1,Math.max(0,scrollY/m)):0}
+
+const clock=new THREE.Clock();
+function frame(){
+  const t=clock.getElapsedTime();
+  const c=progress()*(K.length-1);
+  const i=Math.min(K.length-2,Math.floor(c)),e=ease(c-i),a=K[i],b=K[i+1];
+  const L=(p,q)=>p+(q-p)*e;
+  const tgt={rot:L(a.rot,b.rot),z:L(a.z,b.z),y:L(a.y,b.y),tilt:L(a.tilt,b.tilt)};
+  const d=.075;
+  cur.rot+=(tgt.rot-cur.rot)*d;cur.z+=(tgt.z-cur.z)*d;cur.y+=(tgt.y-cur.y)*d;cur.tilt+=(tgt.tilt-cur.tilt)*d;
+  mx+=(tmx-mx)*.05;my+=(tmy-my)*.05;
+
+  const zScale=portrait?1.62:1;
+  camera.position.set(mx*.5,.3-my*.3,cur.z*zScale);camera.lookAt(0,0,0);
+  stage.position.set(portrait?0:-1.75,(portrait?.5:-.35)+cur.y,0);
+  bottle.rotation.y=cur.rot+Math.sin(t*.6)*.05+mx*.35;
+  bottle.rotation.x=cur.tilt+my*.1;
+  bottle.position.y=Math.sin(t*1.1)*.04;
+
+  // colors
+  tc1.set(a.glow).lerp(tc2.set(b.glow),e);glow.material.color.copy(tc1);
+  rim.color.copy(tc1);
+  const c1=new THREE.Color(a.b1).lerp(tc2.set(b.b1),e),c2=new THREE.Color(a.b2).lerp(tc2.set(b.b2),e);
+  document.body.style.background=`radial-gradient(120% 90% at ${portrait?50:32}% ${portrait?28:42}%,#${c1.getHexString()},#${c2.getHexString()})`;
+
+  // dust
+  const arr=pg.attributes.position.array;
+  for(let n=0;n<N;n++){arr[n*3+1]+=spd[n]*.006;if(arr[n*3+1]>4.5)arr[n*3+1]=-4.5;arr[n*3]+=Math.sin(t*.4+n)*.0008}
+  pg.attributes.position.needsUpdate=true;dust.rotation.y=t*.02;
+
+  // panels
+  panels.forEach((p,n)=>{
+    const o=Math.max(0,Math.min(1,1-Math.abs(c-n)*2.1));
+    p.style.opacity=o.toFixed(3);
+    p.style.transform=portrait?`translateY(${(n-c)*36}px)`:`translateY(calc(-50% + ${(n-c)*46}px))`;
+    p.classList.toggle('on',o>.5);
+  });
+  dots.forEach((d,n)=>d.classList.toggle('on',Math.round(c)===n));
+  hint.style.opacity=c<.25?1:0;
+
+  renderer.render(scene,camera);
+  requestAnimationFrame(frame);
+}
+frame();
+requestAnimationFrame(()=>setTimeout(()=>document.getElementById('load').classList.add('hide'),400));
+</script>
+</body>
+</html>

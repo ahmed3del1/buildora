@@ -1,0 +1,81 @@
+[
+  {
+    "slug": "restaurant",
+    "name": { "ar": "ديوان الوليمة", "en": "Diwan Al Walima" },
+    "category": "restaurants",
+    "city": { "ar": "الرياض", "en": "Riyadh" },
+    "tagline": { "ar": "مطعم ولائم ومناسبات، مع مخطط وليمة تفاعلي", "en": "Feast restaurant with an interactive banquet planner" },
+    "thumb": "assets/thumbs/restaurant.jpg",
+    "accent": "#C9A45C",
+    "replace": ["ديوان الوليمة", "Diwan Al Walima"],
+    "added": "2026-09-22"
+  },
+  {
+    "slug": "dubai-realestate",
+    "name": { "ar": "أُفق للعقارات", "en": "UFUQ Real Estate" },
+    "category": "real-estate",
+    "city": { "ar": "دبي", "en": "Dubai" },
+    "tagline": { "ar": "عقارات فاخرة مع بحث ذكي وحاسبة تمويل", "en": "Luxury properties with smart search and a mortgage calculator" },
+    "thumb": "assets/thumbs/dubai-realestate.jpg",
+    "accent": "#D4B26A",
+    "replace": ["أُفق للعقارات", "أُفق", "أفق", "UFUQ"],
+    "added": "2026-09-20"
+  },
+  {
+    "slug": "riyadh-community",
+    "name": { "ar": "وادي سمر", "en": "Wadi Samar" },
+    "category": "real-estate",
+    "city": { "ar": "الرياض", "en": "Riyadh" },
+    "tagline": { "ar": "مشروع سكني بمجسّم ثلاثي الأبعاد تفاعلي", "en": "Residential community with an interactive 3D masterplan" },
+    "thumb": "",
+    "badge": "3D",
+    "accent": "#2E5E45",
+    "replace": ["وادي سمر", "Wadi Samar", "سمر", "SAMAR", "Samar"],
+    "added": "2026-09-21"
+  },
+  {
+    "slug": "perfume",
+    "name": { "ar": "سديم", "en": "Sadeem" },
+    "category": "retail",
+    "city": { "ar": "الرياض", "en": "Riyadh" },
+    "tagline": { "ar": "متجر عود وبخور بتجربة شراء كاملة", "en": "Oud and incense store with a full shopping flow" },
+    "thumb": "assets/thumbs/perfume.jpg",
+    "accent": "#C8894A",
+    "replace": ["سديم", "SADEEM", "Sadeem"],
+    "added": "2026-09-19"
+  },
+  {
+    "slug": "perfume-3d",
+    "name": { "ar": "سديم إصدار محدود", "en": "Sadeem Limited" },
+    "category": "retail",
+    "city": { "ar": "الرياض", "en": "Riyadh" },
+    "tagline": { "ar": "صفحة إطلاق عطر بزجاجة ثلاثية الأبعاد تتحرك مع السكرول", "en": "Perfume launch page with a 3D bottle that moves as you scroll" },
+    "thumb": "",
+    "badge": "3D",
+    "accent": "#8A5A2B",
+    "replace": ["سديم", "SADEEM", "Sadeem"],
+    "added": "2026-09-19"
+  },
+  {
+    "slug": "asyl-clothing",
+    "name": { "ar": "أصل", "en": "ASYL" },
+    "category": "fashion",
+    "city": { "ar": "الخليج", "en": "GCC" },
+    "tagline": { "ar": "متجر أزياء عصري مع سلة ومقاسات", "en": "Modern fashion store with cart and size guide" },
+    "thumb": "assets/thumbs/asyl-clothing.jpg",
+    "accent": "#3D5AFE",
+    "replace": ["أصل", "ASYL"],
+    "added": "2026-09-22"
+  },
+  {
+    "slug": "apex-cars",
+    "name": { "ar": "أبكس", "en": "APEX" },
+    "category": "cars",
+    "city": { "ar": "دبي", "en": "Dubai" },
+    "tagline": { "ar": "تأجير سيارات فاخرة مع حجز وحاسبة سعر", "en": "Luxury car rental with booking and a price calculator" },
+    "thumb": "assets/thumbs/apex-cars.jpg",
+    "accent": "#E5322D",
+    "replace": ["أبكس", "APEX"],
+    "added": "2026-09-23"
+  }
+]

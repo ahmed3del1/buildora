@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buildora | بيانات مشروعك</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .form { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+  .form h1 { font-size: clamp(30px, 5vw, 44px); margin: 10px 0 6px; line-height: 1.2; }
+  .form > p { color: var(--muted); margin: 0 0 30px; }
+  fieldset { border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 0 0 16px; background: var(--card); }
+  legend { font-family: var(--font-mono); color: var(--neon); padding: 0 8px; font-size: 14px; }
+  .row { margin-bottom: 14px; }
+  .row:last-child { margin-bottom: 0; }
+  .row label { display: block; font-weight: 600; margin-bottom: 6px; }
+  .row small { display: block; color: var(--faint); margin-top: 4px; }
+  textarea.field { height: 110px; padding: 12px 14px; resize: vertical; line-height: 1.6; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts label { font-weight: 400; display: flex; gap: 8px; align-items: center; border: 1px solid var(--line-2); border-radius: 10px; padding: 8px 12px; cursor: pointer; margin: 0; }
+  .opts input { accent-color: var(--neon); }
+  .err { color: #ff7b7b; font-size: 13px; margin-top: 6px; }
+  .err:empty { display: none; }
+  .note { background: var(--neon-dim); border: 1px solid #1e4a31; color: #b9d9c6; border-radius: 12px; padding: 14px 16px; margin: 16px 0; font-size: 15px; }
+  .submit { width: 100%; height: 56px; font-size: 17px; }
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a href="index.html" class="brand" aria-label="Buildora"><span id="navLogo"></span><b>buildora</b></a>
+  <button class="btn btn-sm lang-btn" type="button">EN</button>
+</div></nav>
+
+<form class="form" id="brief" novalidate>
+  <span class="eyebrow">// project brief</span>
+  <h1 data-i18n="t">بيانات مشروعك</h1>
+  <p data-i18n="s">عبّئ النموذج في 3 دقائق، وتوصلنا البيانات على واتساب مباشرة.</p>
+
+  <fieldset>
+    <legend data-i18n="g1">01 · النشاط</legend>
+    <div class="row"><label for="f_name" data-i18n="l_name">اسم النشاط *</label><input class="field" id="f_name" required maxlength="60"><div class="err" data-for="f_name"></div></div>
+    <div class="row"><label for="f_what" data-i18n="l_what">وش يقدم نشاطك؟ *</label><textarea class="field" id="f_what" required data-i18n-ph="p_what" placeholder="مثال: مطعم مندي ومشويات، عندنا توصيل وحجز مناسبات"></textarea><div class="err" data-for="f_what"></div></div>
+    <div class="row"><label for="f_city" data-i18n="l_city">المدينة والدولة</label><input class="field" id="f_city" data-i18n-ph="p_city" placeholder="الرياض، السعودية"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend data-i18n="g2">02 · الموقع</legend>
+    <div class="row"><label data-i18n="l_pkg">الباقة</label>
+      <div class="opts">
+        <label><input type="radio" name="pkg" value="landing"><span data-i18n="o1">صفحة هبوط</span></label>
+        <label><input type="radio" name="pkg" value="business" checked><span data-i18n="o2">موقع النشاط</span></label>
+        <label><input type="radio" name="pkg" value="store"><span data-i18n="o3">متجر إلكتروني</span></label>
+      </div>
+    </div>
+    <div class="row"><label for="f_pages" data-i18n="l_pages">الصفحات أو الأقسام المطلوبة</label><textarea class="field" id="f_pages" data-i18n-ph="p_pages" placeholder="الرئيسية، من نحن، المنيو، الحجز، تواصل معنا"></textarea></div>
+    <div class="row"><label for="f_demo" data-i18n="l_demo">ديمو أعجبك أو مواقع تحب ستايلها</label><input class="field" id="f_demo" data-i18n-ph="p_demo" placeholder="ديمو ديوان الوليمة"></div>
+    <div class="row"><label for="f_langs" data-i18n="l_langs">اللغات</label><input class="field" id="f_langs" data-i18n-ph="p_langs" placeholder="عربي وإنجليزي"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend data-i18n="g3">03 · الهوية والتواصل</legend>
+    <div class="row"><label for="f_colors" data-i18n="l_colors">ألوان الهوية</label><input class="field" id="f_colors" data-i18n-ph="p_colors" placeholder="ذهبي وأسود، أو: ما عندي ألوان محددة"></div>
+    <div class="row"><label for="f_phone" data-i18n="l_phone">رقم الواتساب اللي يظهر في الموقع *</label><input class="field" id="f_phone" required inputmode="tel" dir="ltr" placeholder="+9665XXXXXXXX"><div class="err" data-for="f_phone"></div></div>
+    <div class="row"><label for="f_social" data-i18n="l_social">حسابات السوشيال</label><input class="field" id="f_social" dir="ltr" placeholder="instagram.com/..., tiktok.com/@..."></div>
+    <div class="row"><label for="f_domain" data-i18n="l_domain">عندك دومين؟</label><input class="field" id="f_domain" dir="ltr" data-i18n-ph="p_domain" placeholder="example.com, or: no"></div>
+    <div class="row"><label for="f_date" data-i18n="l_date">متى تحتاج الموقع؟</label><input class="field" id="f_date" data-i18n-ph="p_date" placeholder="خلال أسبوعين"></div>
+    <div class="row"><label for="f_notes" data-i18n="l_notes">أي ملاحظات إضافية</label><textarea class="field" id="f_notes"></textarea></div>
+  </fieldset>
+
+  <div class="note" data-i18n="note">📎 اللوجو والصور والمنيو: أرسلها في نفس محادثة الواتساب بعد ما ترسل النموذج.</div>
+  <button class="btn btn-neon submit" type="submit" data-i18n="go">أرسل البيانات على واتساب</button>
+</form>
+
+<script src="assets/common.js"></script>
+<script>
+(function () {
+  const EN = {
+    title: 'Buildora | Project brief', t: 'Your project brief', s: 'Fill this in 3 minutes and it reaches us directly on WhatsApp.',
+    g1: '01 · Business', l_name: 'Business name *', l_what: 'What does your business offer? *', p_what: 'e.g. Mandi and grills restaurant, with delivery and event catering',
+    l_city: 'City and country', p_city: 'Riyadh, Saudi Arabia',
+    g2: '02 · Website', l_pkg: 'Package', o1: 'Landing page', o2: 'Business website', o3: 'Online store',
+    l_pages: 'Pages or sections you need', p_pages: 'Home, About, Menu, Booking, Contact', l_demo: 'A demo you liked or sites whose style you like', p_demo: 'Diwan Al Walima demo',
+    l_langs: 'Languages', p_langs: 'Arabic and English',
+    g3: '03 · Brand and contact', l_colors: 'Brand colors', p_colors: 'Gold and black, or: no specific colors',
+    l_phone: 'WhatsApp number shown on the site *', l_social: 'Social accounts', l_domain: 'Do you have a domain?', p_domain: 'example.com, or: no',
+    l_date: 'When do you need the site?', p_date: 'Within two weeks', l_notes: 'Anything else',
+    note: '📎 Logo, photos and menu: send them in the same WhatsApp chat after you send this form.', go: 'Send on WhatsApp',
+    req: 'This field is required'
+  };
+  const AR = { title: document.title, req: 'هذا الحقل مطلوب' };
+  document.querySelectorAll('[data-i18n]').forEach(el => { AR[el.dataset.i18n] = el.innerHTML; });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { AR[el.dataset.i18nPh] = el.placeholder; });
+  const DICT = { ar: AR, en: EN };
+  let lang = BZ.getLang();
+  document.getElementById('navLogo').innerHTML = BZ.logoSVG(22);
+  BZ.setLang(lang, DICT);
+  document.querySelector('.lang-btn').addEventListener('click', () => { lang = lang === 'ar' ? 'en' : 'ar'; BZ.setLang(lang, DICT); });
+
+  const v = id => document.getElementById(id).value.trim();
+  document.querySelectorAll('.field').forEach(f => f.addEventListener('input', () => {
+    const e = document.querySelector('.err[data-for="' + f.id + '"]'); if (e) e.textContent = '';
+  }));
+
+  document.getElementById('brief').addEventListener('submit', e => {
+    e.preventDefault();
+    let first = null;
+    ['f_name', 'f_what', 'f_phone'].forEach(id => {
+      if (!v(id)) {
+        document.querySelector('.err[data-for="' + id + '"]').textContent = DICT[lang].req;
+        first = first || document.getElementById(id);
+      }
+    });
+    if (first) { first.focus(); return; }
+    const pkg = document.querySelector('input[name="pkg"]:checked');
+    const pkgLabel = pkg ? pkg.parentNode.textContent.trim() : '';
+    const L = DICT[lang];
+    const strip = s => s.replace(/<[^>]+>/g, '').replace(' *', '');
+    const lines = [
+      '📋 ' + (lang === 'ar' ? 'بيانات مشروع جديد' : 'New project brief'),
+      '',
+      strip(L.l_name) + ': ' + v('f_name'),
+      strip(L.l_what) + ': ' + v('f_what'),
+      strip(L.l_city) + ': ' + v('f_city'),
+      strip(L.l_pkg) + ': ' + pkgLabel,
+      strip(L.l_pages) + ': ' + v('f_pages'),
+      strip(L.l_demo) + ': ' + v('f_demo'),
+      strip(L.l_langs) + ': ' + v('f_langs'),
+      strip(L.l_colors) + ': ' + v('f_colors'),
+      strip(L.l_phone) + ': ' + v('f_phone'),
+      strip(L.l_social) + ': ' + v('f_social'),
+      strip(L.l_domain) + ': ' + v('f_domain'),
+      strip(L.l_date) + ': ' + v('f_date'),
+      strip(L.l_notes) + ': ' + v('f_notes')
+    ];
+    window.open(BZ.wa(lines.join('\n')), '_blank', 'noopener');
+  });
+})();
+</script>
+</body>
+</html>
