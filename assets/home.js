@@ -46,7 +46,7 @@
     f4q: 'Do I own the site and domain?', f4a: 'Yes. The domain is registered in your name and the site is fully yours.',
     f5q: 'How does payment work?', f5a: '50% to start, and 50% before the site goes live on your domain.',
     f6q: 'What happens after delivery?', f6a: 'You get 14 days of free support, then you can join the monthly care plan.',
-    x_title: 'Ready to build your site?', x_sub: 'One WhatsApp message, and your quote arrives within 24 hours.', x_cta: 'Chat on WhatsApp'
+    ft_privacy: 'Privacy', x_title: 'Ready to build your site?', x_sub: 'One WhatsApp message, and your quote arrives within 24 hours.', x_cta: 'Chat on WhatsApp'
   };
   const PKG = { k1: { ar: 'صفحة هبوط', en: 'Landing page' }, k2: { ar: 'موقع النشاط', en: 'Business website' }, k3: { ar: 'متجر إلكتروني', en: 'Online store' } };
 

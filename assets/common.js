@@ -92,6 +92,6 @@ BZ.track = function (event, params, custom) {
     if (a.dataset.pkg) params.content_name = a.dataset.pkg;
     const d = new URLSearchParams(location.search).get('d');
     if (d) params.content_name = d;
-    BZ.track(kind === 'general' || kind === 'whatsapp' ? 'Contact' : 'Lead', params);
+    BZ.track(['demo_order', 'pkg', 'offer'].includes(kind) ? 'Lead' : 'Contact', params);
   }, true);
 })();
