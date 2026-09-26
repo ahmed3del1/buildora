@@ -63,3 +63,35 @@ BZ.logoSVG = function (size, animated) {
 BZ.esc = function (s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 };
+
+// ---------- Meta Pixel ----------
+// Paste the Pixel ID from Meta Events Manager here. Empty = pixel off.
+BZ.pixelId = '1782171553025479';
+
+BZ.track = function (event, params, custom) {
+  if (!window.fbq) return;
+  try { fbq(custom ? 'trackCustom' : 'track', event, params || {}); } catch (e) {}
+};
+
+(function initPixel() {
+  if (!BZ.pixelId) return;
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+    t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+  }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', BZ.pixelId);
+  fbq('track', 'PageView');
+
+  // Every WhatsApp click is a lead; the button tells us which one.
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="https://wa.me"]');
+    if (!a) return;
+    const kind = a.id === 'orderBtn' ? 'demo_order' : (a.dataset.wa || 'whatsapp');
+    const params = { content_category: kind };
+    if (a.dataset.pkg) params.content_name = a.dataset.pkg;
+    const d = new URLSearchParams(location.search).get('d');
+    if (d) params.content_name = d;
+    BZ.track(kind === 'general' || kind === 'whatsapp' ? 'Contact' : 'Lead', params);
+  }, true);
+})();

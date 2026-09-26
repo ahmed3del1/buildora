@@ -30,6 +30,7 @@
 </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1782171553025479&ev=PageView&noscript=1"></noscript>
 <nav class="nav"><div class="wrap">
   <a href="index.html" class="brand" aria-label="Buildora"><span id="navLogo"></span><b>buildora</b></a>
   <button class="btn btn-sm lang-btn" type="button">EN</button>
@@ -136,6 +137,7 @@
       strip(L.l_date) + ': ' + v('f_date'),
       strip(L.l_notes) + ': ' + v('f_notes')
     ];
+    BZ.track('SubmitApplication', { content_name: pkgLabel });
     window.open(BZ.wa(lines.join('\n')), '_blank', 'noopener');
   });
 })();

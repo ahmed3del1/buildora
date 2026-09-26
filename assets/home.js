@@ -155,6 +155,7 @@
     }
     const cat = document.getElementById('bCat').value;
     const pick = demos.filter(d => d.category === cat).sort((a, b) => (b.added || '').localeCompare(a.added || ''))[0] || demos[0];
+    BZ.track('DemoPersonalized', { content_name: pick.slug, content_category: cat }, true);
     location.href = 'demo.html?d=' + pick.slug + '&name=' + encodeURIComponent(name);
   });
 

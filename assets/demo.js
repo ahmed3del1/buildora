@@ -119,8 +119,10 @@
 
   document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => { lang = lang === 'ar' ? 'en' : 'ar'; applyLang(); }));
 
+  let personalized = false;
   input.addEventListener('input', () => {
     bizName = input.value.trim().slice(0, 40);
+    if (!personalized && bizName.length > 2) { personalized = true; BZ.track('DemoPersonalized', { content_name: slug }, true); }
     $('hint').hidden = true;
     pass();
     refresh();
@@ -158,6 +160,7 @@
       return;
     }
     patterns = buildPatterns(demo.replace || []);
+    BZ.track('ViewContent', { content_name: demo.slug, content_category: demo.category });
     frame.src = 'demos/' + demo.slug + '/index.html';
     applyLang();
   });
